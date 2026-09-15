@@ -1,0 +1,46 @@
+{% extends "core/base.html" %}
+{% block content %}
+<h2>Dashboard — {{ today }}</h2>
+
+<div class="row mt-3">
+  <div class="col-md-4">
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Today's Live Price</h5>
+        {% if today_price %}
+          <p class="fs-4">Rs.{{ today_price.price_per_quintal }} / quintal</p>
+          <p class="text-muted small">Source: {{ today_price.get_source_display }}</p>
+        {% else %}
+          <p class="text-danger">Not set yet.</p>
+        {% endif %}
+        <a href="{% url 'set_live_price' %}" class="btn btn-sm btn-primary">Set / Update</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Today's Purchases</h5>
+        <p>Count: {{ day_purchases.count }}</p>
+        <p>Net Qty: {{ day_purchases.total_quantity_kg }} kg</p>
+        <p class="fs-5">Net Paid: Rs.{{ day_purchases.net_amount }}</p>
+        <a href="{% url 'purchase_create' %}" class="btn btn-sm btn-success">+ New Purchase</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Today's Sales</h5>
+        <p>Count: {{ day_sales.count }}</p>
+        <p class="fs-5">Total: Rs.{{ day_sales.total_amount }}</p>
+        <a href="{% url 'sale_create' %}" class="btn btn-sm btn-success">+ New Sale</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a href="{% url 'report_range' %}" class="btn btn-outline-dark">View Profit / Custom Date Report</a>
+{% endblock %}

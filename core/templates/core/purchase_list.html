@@ -1,0 +1,48 @@
+{% extends "core/base.html" %}
+{% block content %}
+<h2>Purchases</h2>
+
+<form method="get" class="d-flex gap-2 mb-3 col-md-4">
+  <input type="date" name="date" value="{{ selected_date }}" class="form-control">
+  <button class="btn btn-outline-primary">Filter</button>
+</form>
+
+<div class="table-responsive">
+<table class="table table-bordered table-sm bg-white">
+  <thead class="table-dark">
+    <tr>
+      <th>Date</th><th>Client</th><th>Qty</th><th>Bags</th><th>Tare Used (kg)</th>
+      <th>Net Qty (kg)</th><th>Live Price/Qtl</th><th>Gross</th><th>Deduction</th><th>Net Paid</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in purchases %}
+    <tr>
+      <td>{{ p.date }}</td>
+      <td>{{ p.client }}</td>
+      <td>{{ p.quantity }} {{ p.unit }}</td>
+      <td>{{ p.num_bags }}</td>
+      <td>{{ p.tare_weight_used_kg }}</td>
+      <td>{{ p.net_quantity_kg }}</td>
+      <td>{{ p.live_price_per_quintal }}</td>
+      <td>{{ p.gross_amount }}</td>
+      <td>{{ p.deduction_amount }}</td>
+      <td><strong>{{ p.net_amount }}</strong></td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="10" class="text-center text-muted">No purchases for this date.</td></tr>
+    {% endfor %}
+  </tbody>
+  <tfoot class="table-secondary fw-bold">
+    <tr>
+      <td colspan="5">Day Total</td>
+      <td>{{ totals.net_quantity_kg }}</td>
+      <td></td>
+      <td>{{ totals.gross_amount }}</td>
+      <td>{{ totals.deduction_amount }}</td>
+      <td>{{ totals.net_amount }}</td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+{% endblock %}

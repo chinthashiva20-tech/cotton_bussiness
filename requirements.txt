@@ -1,0 +1,4 @@
+Django>=5.0,<6.0
+# Optional, only needed if you wire up fetch_live_price_from_web() in core/services.py:
+# requests
+# beautifulsoup4

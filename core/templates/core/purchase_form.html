@@ -1,0 +1,26 @@
+{% extends "core/base.html" %}
+{% block content %}
+<h2>New Purchase Entry</h2>
+
+{% if today_price %}
+  <p class="text-muted">Today's live price: <strong>Rs.{{ today_price.price_per_quintal }}/quintal</strong> (pre-filled below, editable).</p>
+{% else %}
+  <p class="text-danger">No live price set for today yet — <a href="{% url 'set_live_price' %}">set it here</a> or type one directly into the field below.</p>
+{% endif %}
+
+<form method="post" class="col-md-6">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-success">Save Purchase</button>
+</form>
+
+<div class="alert alert-info mt-4 col-md-6">
+  <strong>How the amount is calculated:</strong>
+  <ol class="mb-0">
+    <li>Net weight = entered quantity − (bags × tare weight per bag, default 0.5&nbsp;kg)</li>
+    <li>Gross amount = net weight (in quintals) × live price per quintal</li>
+    <li>Deduction = Rs.50 cut for every Rs.1000 of gross amount (configurable in admin → Business Settings)</li>
+    <li>Net amount paid to client = Gross amount − Deduction</li>
+  </ol>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "core/base.html" %}
+{% block content %}
+<h2>Expenses</h2>
+<div class="table-responsive">
+<table class="table table-bordered table-sm bg-white">
+  <thead class="table-dark"><tr><th>Date</th><th>Type</th><th>Amount</th><th>Description</th></tr></thead>
+  <tbody>
+    {% for e in expenses %}
+    <tr>
+      <td>{{ e.date }}</td>
+      <td>{{ e.get_expense_type_display }}</td>
+      <td>{{ e.amount }}</td>
+      <td>{{ e.description }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4" class="text-center text-muted">No expenses recorded.</td></tr>
+    {% endfor %}
+  </tbody>
+  <tfoot class="table-secondary fw-bold"><tr><td colspan="2">Total (all time)</td><td>{{ total }}</td><td></td></tr></tfoot>
+</table>
+</div>
+{% endblock %}

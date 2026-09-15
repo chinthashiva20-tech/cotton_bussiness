@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+{% block content %}
+<h2>Sales</h2>
+
+<form method="get" class="d-flex gap-2 mb-3 col-md-4">
+  <input type="date" name="date" value="{{ selected_date }}" class="form-control">
+  <button class="btn btn-outline-primary">Filter</button>
+</form>
+
+<div class="table-responsive">
+<table class="table table-bordered table-sm bg-white">
+  <thead class="table-dark">
+    <tr><th>Date</th><th>Buyer</th><th>Qty</th><th>Price/Qtl</th><th>Total</th></tr>
+  </thead>
+  <tbody>
+    {% for s in sales %}
+    <tr>
+      <td>{{ s.date }}</td>
+      <td>{{ s.buyer }}</td>
+      <td>{{ s.quantity }} {{ s.unit }}</td>
+      <td>{{ s.price_per_quintal }}</td>
+      <td><strong>{{ s.total_amount }}</strong></td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5" class="text-center text-muted">No sales for this date.</td></tr>
+    {% endfor %}
+  </tbody>
+  <tfoot class="table-secondary fw-bold">
+    <tr><td colspan="4">Day Total</td><td>{{ total_amount }}</td></tr>
+  </tfoot>
+</table>
+</div>
+{% endblock %}
